@@ -4,7 +4,7 @@ getTrackAndTrace = async (orderNumber) => {
   const dpdURL = "https://dpdshippingreport.nl/";
 
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
     args: ['--proxy-server="direct://"', "--proxy-bypass-list=*"],
   });
   const page = await browser.newPage();

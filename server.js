@@ -3,8 +3,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const jwt = require('express-jwt');
-const jwksRsa = require("jwks-rsa")
 const { getTrackAndTrace } = require("./src/dpdCrawler");
 
 const PORT = process.env.PORT || 8888;
