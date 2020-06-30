@@ -4,10 +4,26 @@ getTrackAndTrace = async (orderNumber) => {
   const dpdURL = "https://dpdshippingreport.nl/";
 
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
     args: ['--proxy-server="direct://"', "--proxy-bypass-list=*"],
   });
   const page = await browser.newPage();
+
+  await page.setViewport({ width: 1920, height: 1080 });
+  await page.setRequestInterception(true);
+  
+  page.on("request", (req) => {
+    if (
+      req.resourceType() == "stylesheet" ||
+      req.resourceType() == "font" ||
+      req.resourceType() == "image"
+    ) {
+      req.abort();
+    } else {
+      req.continue();
+    }
+  });
+  
 
   await page.goto(dpdURL, {
     waitUntil: "networkidle0",
@@ -21,7 +37,7 @@ getTrackAndTrace = async (orderNumber) => {
 
   await Promise.all([await page.click("#loginform > button")]);
 
-  await page.goto(`${dpdURL}/deliverystatus.php`);
+  await page.goto(`${dpdURL}deliverystatus.php`);
   var input = await page.$("#from");
   await input.click({ clickCount: 3 });
   await input.type("2020-06-01");
