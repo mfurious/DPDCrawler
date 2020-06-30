@@ -4,7 +4,7 @@ getTrackAndTrace = async (orderNumber) => {
   const dpdURL = "https://dpdshippingreport.nl/";
 
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--proxy-server="direct://"', "--proxy-bypass-list=*"],
   });
   const page = await browser.newPage();
@@ -29,12 +29,17 @@ getTrackAndTrace = async (orderNumber) => {
     waitUntil: "networkidle0",
   });
 
+
+  await page.evaluate(data =>{
+      return data
+  })
+  if (data) {
   await page.type("#loginform > input[type=text]:nth-child(3)", "Ferm1234");
   await page.type(
     "#loginform > input[type=password]:nth-child(8)",
     "8003CD113"
   );
-
+  };
   await Promise.all([await page.click("#loginform > button")]);
 
   await page.goto(`${dpdURL}deliverystatus.php`);
