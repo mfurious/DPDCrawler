@@ -35,8 +35,11 @@ getTrackAndTrace = async (orderNumber) => {
     "#loginform > input[type=password]:nth-child(8)",
     "8003CD113"
   );
-  
-  await Promise.all([await page.keyboard.press("Enter")]);
+
+  await page.keyboard.press("Enter")
+  await page.waitForNavigation({
+    waitUntil: "networkidle0",
+  });
 
   await page.goto(`${dpdURL}deliverystatus.php`);
   var input = await page.$("#from");
