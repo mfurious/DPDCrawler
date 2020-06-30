@@ -5,7 +5,7 @@ getTrackAndTrace = async (orderNumber) => {
 
   const browser = await puppeteer.launch({
     headless: true,
-    args: ['--proxy-server="direct://"', "--proxy-bypass-list=*"],
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--proxy-server="direct://"', "--proxy-bypass-list=*"],
   });
   const page = await browser.newPage();
 
