@@ -29,18 +29,14 @@ getTrackAndTrace = async (orderNumber) => {
     waitUntil: "networkidle0",
   });
 
-
-  await page.evaluate(data =>{
-      return data
-  })
-  if (data) {
+  
   await page.type("#loginform > input[type=text]:nth-child(3)", "Ferm1234");
   await page.type(
     "#loginform > input[type=password]:nth-child(8)",
     "8003CD113"
   );
-  };
-  await Promise.all([await page.click("#loginform > button")]);
+  
+  await Promise.all([await page.keyboard.press("Enter")]);
 
   await page.goto(`${dpdURL}deliverystatus.php`);
   var input = await page.$("#from");
